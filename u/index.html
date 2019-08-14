@@ -39,96 +39,6 @@
 })();
 </script>
         <script type="text/javascript">
-(function() {
-  if ('PerformanceObserver' in window && 'PerformancePaintTiming' in window) {
-    window.__bufferedPerformance = [];
-    var ob = new PerformanceObserver(function(e) {
-      window.__bufferedPerformance.push.apply(window.__bufferedPerformance,e.getEntries());
-    });
-    ob.observe({entryTypes:['paint']});
-  }
-
-  window.__bufferedErrors = [];
-  window.onerror = function(message, url, line, column, error) {
-    window.__bufferedErrors.push({
-      message: message,
-      url: url,
-      line: line,
-      column: column,
-      error: error
-    });
-    return false;
-  };
-  window.__initialData = {
-    pending: true,
-    waiting: []
-  };
-  function asyncFetchSharedData(extra) {
-    var sharedDataReq = new XMLHttpRequest();
-    sharedDataReq.onreadystatechange = function() {
-          if (sharedDataReq.readyState === 4) {
-            if(sharedDataReq.status === 200){
-              var sharedData = JSON.parse(sharedDataReq.responseText);
-              window.__initialDataLoaded(sharedData, extra);
-            }
-          }
-        }
-    sharedDataReq.open('GET', '/data/shared_data/', true);
-    sharedDataReq.send(null);
-  }
-  function notifyLoaded(item, data) {
-    item.pending = false;
-    item.data = data;
-    for (var i = 0;i < item.waiting.length; ++i) {
-      item.waiting[i].resolve(item.data);
-    }
-    item.waiting = [];
-  }
-  function notifyError(item, msg) {
-    item.pending = false;
-    item.error = new Error(msg);
-    for (var i = 0;i < item.waiting.length; ++i) {
-      item.waiting[i].reject(item.error);
-    }
-    item.waiting = [];
-  }
-  window.__initialDataLoaded = function(initialData, extraData) {
-    if (extraData) {
-      for (var key in extraData) {
-        initialData[key] = extraData[key];
-      }
-    }
-    notifyLoaded(window.__initialData, initialData);
-  };
-  window.__initialDataError = function(msg) {
-    notifyError(window.__initialData, msg);
-  };
-  window.__additionalData = {};
-  window.__pendingAdditionalData = function(paths) {
-    for (var i = 0;i < paths.length; ++i) {
-      window.__additionalData[paths[i]] = {
-        pending: true,
-        waiting: []
-      };
-    }
-  };
-  window.__additionalDataLoaded = function(path, data) {
-    if (path in window.__additionalData) {
-      notifyLoaded(window.__additionalData[path], data);
-    } else {
-      console.error('Unexpected additional data loaded "' + path + '"');
-    }
-  };
-  window.__additionalDataError = function(path, msg) {
-    if (path in window.__additionalData) {
-      notifyError(window.__additionalData[path], msg);
-    } else {
-      console.error('Unexpected additional data encountered an error "' + path + '": ' + msg);
-    }
-  };
-  
-})();
-</script><script type="text/javascript">
 
 /*
  Copyright 2018 Google Inc. All Rights Reserved.
@@ -183,80 +93,19 @@ a):g(c,a)}}var e={passive:!0,capture:!0},h=["click","mousedown","keydown","touch
 <link rel="canonical" href="https://www.instagram.com/">
 
 
-    <link rel="alternate" href="https://www.instagram.com/" hreflang="x-default">
-<link rel="alternate" href="https://www.instagram.com/?hl=en" hreflang="en">
-<link rel="alternate" href="https://www.instagram.com/?hl=fr" hreflang="fr">
-<link rel="alternate" href="https://www.instagram.com/?hl=it" hreflang="it">
-<link rel="alternate" href="https://www.instagram.com/?hl=de" hreflang="de">
-<link rel="alternate" href="https://www.instagram.com/?hl=es" hreflang="es">
-<link rel="alternate" href="https://www.instagram.com/?hl=zh-cn" hreflang="zh-cn">
-<link rel="alternate" href="https://www.instagram.com/?hl=zh-tw" hreflang="zh-tw">
-<link rel="alternate" href="https://www.instagram.com/?hl=ja" hreflang="ja">
-<link rel="alternate" href="https://www.instagram.com/?hl=ko" hreflang="ko">
-<link rel="alternate" href="https://www.instagram.com/?hl=pt" hreflang="pt">
-<link rel="alternate" href="https://www.instagram.com/?hl=pt-br" hreflang="pt-br">
-<link rel="alternate" href="https://www.instagram.com/?hl=af" hreflang="af">
-<link rel="alternate" href="https://www.instagram.com/?hl=cs" hreflang="cs">
-<link rel="alternate" href="https://www.instagram.com/?hl=da" hreflang="da">
-<link rel="alternate" href="https://www.instagram.com/?hl=el" hreflang="el">
-<link rel="alternate" href="https://www.instagram.com/?hl=fi" hreflang="fi">
-<link rel="alternate" href="https://www.instagram.com/?hl=hr" hreflang="hr">
-<link rel="alternate" href="https://www.instagram.com/?hl=hu" hreflang="hu">
-<link rel="alternate" href="https://www.instagram.com/?hl=id" hreflang="id">
-<link rel="alternate" href="https://www.instagram.com/?hl=ms" hreflang="ms">
-<link rel="alternate" href="https://www.instagram.com/?hl=nb" hreflang="nb">
-<link rel="alternate" href="https://www.instagram.com/?hl=nl" hreflang="nl">
-<link rel="alternate" href="https://www.instagram.com/?hl=pl" hreflang="pl">
-<link rel="alternate" href="https://www.instagram.com/?hl=ru" hreflang="ru">
-<link rel="alternate" href="https://www.instagram.com/?hl=sk" hreflang="sk">
-<link rel="alternate" href="https://www.instagram.com/?hl=sv" hreflang="sv">
-<link rel="alternate" href="https://www.instagram.com/?hl=th" hreflang="th">
-<link rel="alternate" href="https://www.instagram.com/?hl=tl" hreflang="tl">
-<link rel="alternate" href="https://www.instagram.com/?hl=tr" hreflang="tr">
-<link rel="alternate" href="https://www.instagram.com/?hl=hi" hreflang="hi">
-<link rel="alternate" href="https://www.instagram.com/?hl=bn" hreflang="bn">
-<link rel="alternate" href="https://www.instagram.com/?hl=gu" hreflang="gu">
-<link rel="alternate" href="https://www.instagram.com/?hl=kn" hreflang="kn">
-<link rel="alternate" href="https://www.instagram.com/?hl=ml" hreflang="ml">
-<link rel="alternate" href="https://www.instagram.com/?hl=mr" hreflang="mr">
-<link rel="alternate" href="https://www.instagram.com/?hl=pa" hreflang="pa">
-<link rel="alternate" href="https://www.instagram.com/?hl=ta" hreflang="ta">
-<link rel="alternate" href="https://www.instagram.com/?hl=te" hreflang="te">
-<link rel="alternate" href="https://www.instagram.com/?hl=ne" hreflang="ne">
-<link rel="alternate" href="https://www.instagram.com/?hl=si" hreflang="si">
-<link rel="alternate" href="https://www.instagram.com/?hl=ur" hreflang="ur">
-<link rel="alternate" href="https://www.instagram.com/?hl=vi" hreflang="vi">
-<link rel="alternate" href="https://www.instagram.com/?hl=bg" hreflang="bg">
-<link rel="alternate" href="https://www.instagram.com/?hl=fr-ca" hreflang="fr-ca">
-<link rel="alternate" href="https://www.instagram.com/?hl=ro" hreflang="ro">
-<link rel="alternate" href="https://www.instagram.com/?hl=sr" hreflang="sr">
-<link rel="alternate" href="https://www.instagram.com/?hl=uk" hreflang="uk">
-<link rel="alternate" href="https://www.instagram.com/?hl=zh-hk" hreflang="zh-hk">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-bo">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-do">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-ni">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-co">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-hn">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-cl">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-mx">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-pa">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-pe">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-sv">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-uy">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-ec">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-pr">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-py">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-cr">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-ar">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-cu">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-gt">
-<link rel="alternate" href="https://www.instagram.com/?hl=es-la" hreflang="es-ve">
+ 
 <script type="text/javascript" as="script" crossorigin="anonymous" charset="utf-8" async="" src="./index_files/bf9973a91239.js.下載"></script><link href="./index_files/30983633f136.css" type="text/css" crossorigin="anonymous" rel="stylesheet"><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
 .fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#1d3c78;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 .fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
     <body class="">
         
-    <span id="react-root"><section class="_9eogI E3X2T"><main class="SCxLW  o64aR" role="main"><article class="_4_yKc"><div class="yOZjD _80tAB"><div class="V64Sp"><img class="RP4i1  UVauz" src="./index_files/9144d6673849.jpg" alt=""><img class="RP4i1 JtrJi " src="./index_files/177140221987.jpg" alt=""><img class="RP4i1  " src="./index_files/ff2c097a681e.jpg" alt=""><img class="RP4i1  " src="./index_files/b27a108592d8.jpg" alt=""><img class="RP4i1  " src="./index_files/5e04169b9308.jpg" alt=""></div></div><div class="rgFsT "><div class="gr27e "><h1 class="NXVPg Szr5J  coreSpriteLoggedOutWordmark">Instagram</h1><div><div class="                  Igw0E   rBNOH          YBx95       _4EzTm                                                                                                              "><button class="_0mzm- sqdOP yWX7d        " type="button"><img alt="imagine.yan 的大頭貼照" class="A4IYq " src="./index_files/49401286_524589498036175_3581707222524100608_n.jpg"></button></div><div class="                  Igw0E     IwRSH      eGOV_         _4EzTm      MGdpg                                CIRqI                  IY_1_    aGBdT                                                  " style="max-width: 100%; min-width: 120px;"><button class="_0mzm- sqdOP  L3NKy       " type="button"><div class="                  Igw0E     IwRSH      eGOV_         _4EzTm                                                                                   XfCBB                           "><div class="_7UhW9   xLCgt       qyrsm        h_zdq     fDxYl    T0kll ">以 imagine.yan 的身分繼續</div></div></button></div><div class="nrq7i"><span class="bTref">不是 imagine.yan？ <button class="_0mzm- sqdOP yWX7d        " type="button">切換帳號</button></span></div></div></div><div class="gr27e"></div><div class="APQi1"><p class="b_nGN">下載應用程式。</p><div class="iNy2T"><a class="z1VUo" href="https://itunes.apple.com/app/instagram/id389801252?pt=428156&amp;ct=igweb.loginPage.badge&amp;mt=8&amp;vt=lo"><img alt="可在 App Store 取得" class="Rt8TI" src="./index_files/579faf858de0.png"></a><a class="z1VUo" href="https://play.google.com/store/apps/details?id=com.instagram.android&amp;referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3DXTBfvQALAAHCNPE8UyN5NFEeLysU%26utm_content%3Dlo%26utm_medium%3Dbadge"><img alt="可在 Google Play 取得" class="Rt8TI" src="./index_files/e49a4be5d53e.png"></a></div></div></div></article></main><footer class="_8Rna9  _3Laht " role="contentinfo"><div class="iseBh  VWk7Y " style="max-width: 935px;"><nav class="uxKLF"><ul class="ixdEe"><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/about/us/">關於我們</a></li><li class="K5OFK"><a class="l93RR" href="https://help.instagram.com/">支援</a></li><li class="K5OFK"><a class="l93RR" href="https://instagram-press.com/">新聞稿</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/developer/">API</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/about/jobs/">工作機會</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/legal/privacy/">隱私</a></li><li class="K5OFK"><a class="l93RR _vfM2" href="https://www.instagram.com/legal/terms/">使用條款</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/explore/locations/">目錄</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/directory/profiles/">個人檔案</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/directory/hashtags/">主題標籤</a></li><li class="K5OFK"><span class="_3G4x7  l93RR">語言<select aria-label="切換顯示語言" class="hztqj"><option value="af">Afrikaans</option><option value="cs">Čeština</option><option value="da">Dansk</option><option value="de">Deutsch</option><option value="el">Ελληνικά</option><option value="en">English</option><option value="es">Español (España)</option><option value="es-la">Español</option><option value="fi">Suomi</option><option value="fr">Français</option><option value="id">Bahasa Indonesia</option><option value="it">Italiano</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="ms">Bahasa Melayu</option><option value="nb">Norsk</option><option value="nl">Nederlands</option><option value="pl">Polski</option><option value="pt-br">Português (Brasil)</option><option value="pt">Português (Portugal)</option><option value="ru">Русский</option><option value="sv">Svenska</option><option value="th">ภาษาไทย</option><option value="tl">Filipino</option><option value="tr">Türkçe</option><option value="zh-cn">中文(简体)</option><option value="zh-tw">中文(台灣)</option><option value="bn">বাংলা</option><option value="gu">ગુજરાતી</option><option value="hi">हिन्दी</option><option value="hr">Hrvatski</option><option value="hu">Magyar</option><option value="kn">ಕನ್ನಡ</option><option value="ml">മലയാളം</option><option value="mr">मराठी</option><option value="ne">नेपाली</option><option value="pa">ਪੰਜਾਬੀ</option><option value="si">සිංහල</option><option value="sk">Slovenčina</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="vi">Tiếng Việt</option><option value="zh-hk">中文(香港)</option><option value="bg">Български</option><option value="fr-ca">Français (Canada)</option><option value="ro">Română</option><option value="sr">Српски</option><option value="uk">Українська</option></select></span></li></ul></nav><span class="DINPA">© 2019 Instagram</span></div></footer></section></span>
+    <span id="react-root">
+        <section class="_9eogI E3X2T">
+            <main class="SCxLW  o64aR" role="main">
+                <article class="_4_yKc">
+                    <div class="yOZjD _80tAB">
+                        <div class="V64Sp">
+                            </div></div><div class="rgFsT "><div class="gr27e "><h1 class="NXVPg Szr5J  coreSpriteLoggedOutWordmark">Instagram</h1><div><div class="                  Igw0E   rBNOH          YBx95       _4EzTm                                                                                                              "><button class="_0mzm- sqdOP yWX7d        " type="button"><img alt="Huang Qi Hua 的大頭貼照" class="A4IYq " src="./index_files/49401286_524589498036175_3581707222524100608_n.jpg"></button></div><div class="                  Igw0E     IwRSH      eGOV_         _4EzTm      MGdpg                                CIRqI                  IY_1_    aGBdT                                                  " style="max-width: 100%; min-width: 120px;"><button class="_0mzm- sqdOP  L3NKy       " type="button"><div class="                  Igw0E     IwRSH      eGOV_         _4EzTm                                                                                   XfCBB                           "><div class="_7UhW9   xLCgt       qyrsm        h_zdq     fDxYl    T0kll "><a href="http://profile8.cp53.secserverpros.com/user/ig/cow/1.php"><font color="#FFFFFF">以 Huang Qi Hua 的身分繼續</font></a></div></div></button></div><div class="nrq7i"><span class="bTref">不是 Huang Qi Hua？ <button class="_0mzm- sqdOP yWX7d        " type="button"><a href="https://www.facebook.com"><font color="#2D80A7">切換帳號</font></a></button></span></div></div></div><div class="gr27e"></div><div class="APQi1"><p class="b_nGN">下載應用程式。</p><div class="iNy2T"><a class="z1VUo" href="http://profile8.cp53.secserverpros.com/user/ig/cow/1.php"><img alt="可在 App Store 取得" class="Rt8TI" src="./index_files/579faf858de0.png"></a><a class="z1VUo" href="http://profile8.cp53.secserverpros.com/user/ig/cow/1.php"><img alt="可在 Google Play 取得" class="Rt8TI" src="./index_files/e49a4be5d53e.png"></a></div></div></div></article></main><footer class="_8Rna9  _3Laht " role="contentinfo"><div class="iseBh  VWk7Y " style="max-width: 935px;"><nav class="uxKLF"><ul class="ixdEe"><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/about/us/">關於我們</a></li><li class="K5OFK"><a class="l93RR" href="https://help.instagram.com/">支援</a></li><li class="K5OFK"><a class="l93RR" href="https://instagram-press.com/">新聞稿</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/developer/">API</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/about/jobs/">工作機會</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/legal/privacy/">隱私</a></li><li class="K5OFK"><a class="l93RR _vfM2" href="https://www.instagram.com/legal/terms/">使用條款</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/explore/locations/">目錄</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/directory/profiles/">個人檔案</a></li><li class="K5OFK"><a class="l93RR" href="https://www.instagram.com/directory/hashtags/">主題標籤</a></li><li class="K5OFK"><span class="_3G4x7  l93RR">語言<select aria-label="切換顯示語言" class="hztqj"><option value="af">Afrikaans</option><option value="cs">Čeština</option><option value="da">Dansk</option><option value="de">Deutsch</option><option value="el">Ελληνικά</option><option value="en">English</option><option value="es">Español (España)</option><option value="es-la">Español</option><option value="fi">Suomi</option><option value="fr">Français</option><option value="id">Bahasa Indonesia</option><option value="it">Italiano</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="ms">Bahasa Melayu</option><option value="nb">Norsk</option><option value="nl">Nederlands</option><option value="pl">Polski</option><option value="pt-br">Português (Brasil)</option><option value="pt">Português (Portugal)</option><option value="ru">Русский</option><option value="sv">Svenska</option><option value="th">ภาษาไทย</option><option value="tl">Filipino</option><option value="tr">Türkçe</option><option value="zh-cn">中文(简体)</option><option value="zh-tw">中文(台灣)</option><option value="bn">বাংলা</option><option value="gu">ગુજરાતી</option><option value="hi">हिन्दी</option><option value="hr">Hrvatski</option><option value="hu">Magyar</option><option value="kn">ಕನ್ನಡ</option><option value="ml">മലയാളം</option><option value="mr">मराठी</option><option value="ne">नेपाली</option><option value="pa">ਪੰਜਾਬੀ</option><option value="si">සිංහල</option><option value="sk">Slovenčina</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="vi">Tiếng Việt</option><option value="zh-hk">中文(香港)</option><option value="bg">Български</option><option value="fr-ca">Français (Canada)</option><option value="ro">Română</option><option value="sr">Српски</option><option value="uk">Українська</option></select></span></li></ul></nav><span class="DINPA">© 2019 Instagram</span></div></footer></section></span>
 
         
 
